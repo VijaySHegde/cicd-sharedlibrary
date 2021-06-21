@@ -100,6 +100,10 @@ def call(body) {
             }//end of node
 
         }//end of try
+        catch(Exception err) {
+            failedStage = "${pipelineStage}
+            echo "Build failed at ${pipelineStage} with ${err}"
+        }
 
     }//end of timestamps
 
