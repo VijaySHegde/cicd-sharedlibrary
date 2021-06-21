@@ -12,5 +12,7 @@ def call(body) {
 sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
     }
     */
+    println(mavenGoals)
+    println(pomLocationName)
    sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
 }
