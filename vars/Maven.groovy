@@ -14,5 +14,7 @@ sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
     */
     println(mavenGoals)
     println(pomLocationName)
-   sh 'mvn -s ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
+   sh """
+   mvn "${mavenGoals}" -f ${WORKSPACE}/${pomLocationName}
+   """
 }
