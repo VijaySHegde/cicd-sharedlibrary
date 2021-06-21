@@ -33,12 +33,12 @@ def call(body){
                     step([$class: 'WsCleanup'])
                     checkout scm
                     pom = readMavenPom file: "${pomFileLocation}"
-
+/*
                     def settingsfileCreate = libraryResource('')
                     writeFile file : 'settingsfile.xml', text: file
                     def file = readFile ("${WORKSPACE}/settingfile.xml").replace('NEXUS_SNAPSHOT_URL', "")
                     writeFile file : "settings.xml", text: file
-
+*/
                 }//end of checkout stage
 
                 stage("Build") {
