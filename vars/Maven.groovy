@@ -7,10 +7,10 @@ def call(body) {
     def branchName = config.branchName
     def pomLocationName = config.pomLocation
 
-    docker.image('https://hub.docker.com/_/maven').inside('--net=host -v /app/maven:/app/maven')
+  /*  docker.image('https://hub.docker.com/_/maven').inside('--net=host -v /app/maven:/app/maven')
     {
 sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
     }
-    
-   // sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
+    */
+   sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
 }
