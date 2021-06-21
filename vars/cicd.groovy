@@ -102,7 +102,7 @@ def call(body) {
 
         }//end of try
         catch(Exception err) {
-            failedStage = "${pipelineStage}
+            failedStage = "${pipelineStage}"
             echo "Build failed at ${pipelineStage} with ${err}"
         }
 
