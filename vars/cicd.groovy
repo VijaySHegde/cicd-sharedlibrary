@@ -4,7 +4,7 @@ import hudson.model.Actionable
 import jenkins.model.*
 jenkins = Jenkins.instance
 
-def call(body) {
+def call(body){
     def config = [:]
     body.resolveStrategy = clousre.DELEGATE_FIRST
     body.delegate = config
