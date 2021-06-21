@@ -19,6 +19,7 @@ def call(body) {
     
     def executeNexusIQ = config.executeNexusIQ ?: 'yes'
     def branch = ''
+    def failedStage = 'None'
     branch = "${BRANCH_NAME}"
 
     timestamps {
