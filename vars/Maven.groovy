@@ -12,5 +12,5 @@ def cal(body) {
 
     }
     */
-    sh 'mvn ${mavenGoals}'
+    sh 'mvn ${mavenGoals} -f ${WORKSPACE}/${pomLocationName}'
 }
