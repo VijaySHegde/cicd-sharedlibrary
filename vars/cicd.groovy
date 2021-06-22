@@ -100,18 +100,19 @@ def call(body){
                     
                 } //end of sonar if statement
                 
-                stage("build docker image") {
+                stage("build docker image and push") {
                     pipelineStage = "${STAGE_NAME}"
-                    sh """
+                 /*   sh """
                     docker build -t vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER .
                     """
-                    
-//                      docker.withRegistry('', 'dockerhub') {
-//                          def customImage = docker.build("vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}") 
-//                      }
+                   */ 
+                     docker.withRegistry('', 'dockerhub') {
+                         def customImage = docker.build("vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}")
+                         customImage.push()
+                     }
                 }//end  of build docker 
                 
-                 stage("push docker image") {
+                /* stage("push docker image") {
 //                     docker.withRegistry('', 'dockerhub') {
                         
 //                     }
@@ -127,7 +128,7 @@ def call(body){
                      
                     
                 }//end of push docker image
-
+*/
                  
             }//end of node
 
