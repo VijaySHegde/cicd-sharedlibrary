@@ -1,8 +1,8 @@
 import java.text.SimpleDateFormat
 import hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
-import jenkins.model.*
-jenkins = Jenkins.instance
+//import jenkins.model.*
+//jenkins = Jenkins.instance
 
 def call(body){
     def config = [:]
