@@ -129,6 +129,17 @@ def call(body){
                     
                 }//end of push docker image
 */
+                stage("Deploy") {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
+	                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+	                    credentialsId: 'AWS_Credentials', 
+	                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+	                        withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', 
+	                        variable: 'KUBECONFIG')]) {
+                            sh "ansible-playbook  playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
+							}
+							}
+                }//end of deploy stage
                  
             }//end of node
 
