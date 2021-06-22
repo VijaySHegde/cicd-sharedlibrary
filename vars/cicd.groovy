@@ -43,11 +43,11 @@ def call(body){
 
                 stage("Build") {
                     pipelineStage = "${STAGE_NAME}"
-                    Maven {
+                 /*   Maven {
                         mavenGoals = "${mvnGoals}"
                         branchName = "${branch}"
                         pomLocation = "${pomFileLocation}"
-                    }
+                    } */
                     if("${executeUnitTest}".toUpperCase()=='YES') {
                         junit "${junitReportLocation}"
                         AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
