@@ -106,17 +106,25 @@ def call(body){
                     docker build -t vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER .
                     """
                     
+//                      docker.withRegistry('', 'dockerhub') {
+//                          def customImage = docker.build("vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}") 
+//                      }
                 }//end  of build docker 
                 
-                stage("push docker image") {
-                    
+                 stage("push docker image") {
+//                     docker.withRegistry('', 'dockerhub') {
+                        
+//                     }
+                        
              
                      withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPwd')]) {
                      sh """
                      docker login -u vijayshegde -p ${dockerHubPwd}
-                     docker push vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER
+                     
                      """
                      }
+                     sh 'docker push vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER'
+                     
                     
                 }//end of push docker image
 
