@@ -103,7 +103,7 @@ def call(body){
                 stage("build docker image") {
                     pipelineStage = "${STAGE_NAME}"
                     sh """
-                    docker build -t vijayshegde/petclinic:$BUILD_NUMBER .
+                    docker build -t vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER .
                     """
                     
                 }//end  of build docker 
@@ -114,7 +114,7 @@ def call(body){
                      withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPwd')]) {
                      sh """
                      docker login -u vijayshegde -p ${dockerHubPwd}
-                     docker push vijayshegde/petclinic:$BUILD_NUMBER
+                     docker push vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER
                      """
                      }
                     
