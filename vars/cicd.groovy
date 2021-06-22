@@ -136,7 +136,7 @@ def call(body){
 	                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 	                        withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', 
 	                        variable: 'KUBECONFIG')]) {
-                            sh "ansible-playbook  playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
+                            sh "ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
 							}
 							}
                 }//end of deploy stage
