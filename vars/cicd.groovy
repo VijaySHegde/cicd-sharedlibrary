@@ -99,6 +99,26 @@ def call(body){
                     }// end of gate stage
                     
                 } //end of sonar if statement
+                
+                stage("build docker image") {
+                    pipelineStage = "${STAGE_NAME}"
+                    sh """
+                    docker build -t vijayshegde/petclinic:$BUILD_NUMBER .
+                    """
+                    
+                }//end  of build docker 
+                
+                stage("push docker image") {
+                    
+             
+                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPwd')]) {
+                     sh """
+                     docker login -u vijayshegde -p ${dockerHubPwd}
+                     docker push vijayshegde/petclinic:$BUILD_NUMBER
+                     """
+                     }
+                    
+                }//end of push docker image
 
                  
             }//end of node
