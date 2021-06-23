@@ -15,6 +15,7 @@ def call(body){
     def mvnGoals = config.mvnGoals ?: ''
     def pomFileLocation = config.pomFileLocation ?: 'pom.xml'
     def executeMavenGoal = config.executeMavenGoal
+    def executeCoverage = config.executeCoverage ?: 'YES'
     
     def executeUnitTest = config.executeUnitTest ?: 'NO'
     def junitReportLocation = config.junitReportLocation ?: ''
@@ -72,7 +73,7 @@ def call(body){
                 }//end of build stage
 		    }
 
-                if("${executeUnitTest}".toUpperCase() == 'YES') {
+                if("${executeCoverage}".toUpperCase() == 'YES') {
                     stage("Unit test with coverage") {
                         pipelineStage = "${STAGE_NAME}"
                         Coverage {
