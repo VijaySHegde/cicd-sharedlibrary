@@ -78,8 +78,8 @@ def call(body){
                         Coverage {
                             junitResultLocation = "${junitReportlocation}"
                             classPattern = "${jacocoClassPattern}"
-			    execPattern="${jacocoExecPattern}
-			    sourceInclusionPattern ="${jacocoSourceInclusionPattern}
+			    execPattern="${jacocoExecPattern}"
+			    sourceInclusionPattern ="${jacocoSourceInclusionPattern}"
 			    sourcePattern  = "${jacocoSourcePattern}"
                         }
 
