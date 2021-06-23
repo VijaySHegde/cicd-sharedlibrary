@@ -151,8 +151,8 @@ def call(body){
 			    sh """
 			    docker rm --force spring-petclinic_mysql_1
 			    docker rmi --force mysql:5.7
-			    timeout -k 2m docker-compose up
-			    timeout -k 2m mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+			    timeout 60s docker-compose up
+			    timeout 60s mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 			    """
 		    }//end of db deploy
                
