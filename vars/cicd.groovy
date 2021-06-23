@@ -131,22 +131,23 @@ def call(body){
 */
                 stage("Deploy") {
 			 pipelineStage = "${STAGE_NAME}"
-               /* withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
 	                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
 	                    credentialsId: 'AWS_Credentials', 
 	                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 	                        withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', 
 	                        variable: 'KUBECONFIG')]) {
-                           // sh " sudo ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
-					sh 'kubectl create -f kubernetes-configmap.yml'
+                            sh "sudo ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
+					//sh 'kubectl create -f kubernetes-configmap.yml'
 							}
 							}
-							*/
-			kubernetesDeploy(
+							
+			/*kubernetesDeploy(
 				configs:'kubernetes-configmap.yml',
 				kubeconfigid:'kubernetes_config',
 				enableConfigSubstitution:true
 				)
+				*/
                 }//end of deploy stage
                  
             }//end of node
