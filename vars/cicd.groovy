@@ -150,7 +150,7 @@ def call(body){
 			    pipelineStage = "${STAGE_NAME}"
 			    sh """
 			    docker rm --force spring-petclinic_mysql_1
-			    docker rmi mysql:5.7
+			    docker rmi --force mysql:5.7
 			    timeout -k 2m docker-compose up
 			    timeout -k 2m mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 			    """
