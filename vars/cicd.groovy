@@ -146,7 +146,14 @@ def call(body){
                             
                         }
 		     }
-                
+		    stage("DB deployment-mysql conatiner") {
+			    pipelineStage = "${STAGE_NAME}"
+			    sh """
+			    docker rm --force spring-petclinic_mysql_1
+			    docker rmi mysql:5.7
+			    mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+			    """
+		    }//end of db deploy
                
                 
                 /* stage("push docker image") {
