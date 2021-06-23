@@ -138,8 +138,8 @@ def call(body){
 	                        withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', 
 	                        variable: 'KUBECONFIG')]) {
                             //sh "sudo ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}"
-			      sh "sudo ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:latest"
-					//sh 'kubectl create -f kubernetes-configmap.yml'
+			     // sh "sudo ansible-playbook playbook.yml --extra-vars image_id=vijayshegde/spring-petclinic-2.4.5.jar:latest"
+					sh 'kubectl create -f kubernetes-configmap.yml'
 							}
 							}
 							
