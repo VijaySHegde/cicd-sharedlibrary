@@ -14,13 +14,20 @@ def call(body){
     def buildNode = config.buildNode ?: ''
     def mvnGoals = config.mvnGoals ?: ''
     def pomFileLocation = config.pomFileLocation ?: 'pom.xml'
+    def executeMavenGoal = config.executeMavenGoal
     
     def executeUnitTest = config.executeUnitTest ?: 'NO'
     def junitReportLocation = config.junitReportLocation ?: ''
+    def jacocoClassPattern =config.jacocoClassPattern ?: '**/classes'
+    def jacocoExecPattern = config.jacocoExecPattern ?: '**/**.exec'
+    def jacocoSourceInclusionPattern = config.jacocoSourceInclusionPattern ?: '**/*.java'
+    def jacocoSourcePattern = config.jacocoSourcePattern ?: '**/src/main/java'
 
     def executeSonar = config.executeSonar ?: 'yes'
     
     def executeNexusIQ = config.executeNexusIQ ?: 'yes'
+    def nexusAppName = config.nexusAppName
+    def packagePath = config.packagePath
     def branch = ''
     def failedStage = 'None'
     branch = "${BRANCH_NAME}"
@@ -40,19 +47,20 @@ def call(body){
                     writeFile file : "settings.xml", text: file
 */
                 }//end of checkout stage
-
+		    if("${executeMavenGoal}".toUpperCase()=='YES') {
                 stage("Build") {
                     pipelineStage = "${STAGE_NAME}"
-                 /*   Maven {
+                    Maven {
                         mavenGoals = "${mvnGoals}"
                         branchName = "${branch}"
                         pomLocation = "${pomFileLocation}"
-                    } */
+                    } 
                     if("${executeUnitTest}".toUpperCase()=='YES') {
                         junit "${junitReportLocation}"
                         AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
                         if(testResultAction != null)
                         {
+				println("found test cases")
 
                         }
                         else {
@@ -62,6 +70,7 @@ def call(body){
                         
                     }
                 }//end of build stage
+		    }
 
                 if("${executeUnitTest}".toUpperCase() == 'YES') {
                     stage("Unit test with coverage") {
@@ -69,6 +78,9 @@ def call(body){
                         Coverage {
                             junitResultLocation = "${junitReportlocation}"
                             classPattern = "${jacocoClassPattern}"
+			    execPattern="${jacocoExecPattern}
+			    sourceInclusionPattern ="${jacocoSourceInclusionPattern}
+			    sourcePattern  = "${jacocoSourcePattern}"
                         }
 
 
@@ -78,7 +90,14 @@ def call(body){
                     stage("sonar") {
                         pipelineStage = "${STAGE_NAME}"
                         Sonar {
-
+			 
+                            applicationName = config.applicationName
+                            projectName = config.sonarProjectName
+                            projectKey = config.sonarProjectKey
+                            projectVersion = config.sonarProjectVersion
+                            sonarLanguage = config.sonarProjectLanguage
+                            sonarSources = config.sonarSources
+                            
                         }
                     }//end of sonar stage
 
@@ -99,6 +118,21 @@ def call(body){
                     }// end of gate stage
                     
                 } //end of sonar if statement
+		     if("${executeNexusIQ}".toUpperCase() == 'YES') {
+			    stage('NexusIQ Scan') {
+                            pipelineStage = "${STAGE_NAME}"
+                            nexusIQAppName = "${nexusAppName }"
+                            packagePath_nexusIQ = "${packagePath}"
+                            nexusIQJSONInfo = nexusPolicyEvaluation advancedProperties: '', failBuildOnNetworkError: false,
+                                    iqApplication: selectedApplication("${nexusIQAppName}"),
+                                    iqScanPatterns: [[scanPattern: "${packagePath_nexusIQ}"]],
+                                    iqStage: 'build', jobCredentialsId: "${credential}"
+                            criticalComponentCount = "${nexusIQJSONInfo.criticalComponentCount}"
+
+                            manager.build.@result = (("${pipelineStage}" == 'NexusIQ Scan') && ("${currentBuild.result}" == 'UNSTABLE')) ? hudson.model.Result.SUCCESS : manager.build.@result
+                            
+                        }
+		     }
                 
                 stage("build docker image and push") {
                     pipelineStage = "${STAGE_NAME}"
@@ -142,7 +176,7 @@ def call(body){
 					sh 'kubectl create -f kubernetes-configmap.yml'
 							}
 							}
-							
+			//using k8s deploy plugin-2nd way				
 			/*kubernetesDeploy(
 				configs:'kubernetes-configmap.yml',
 				kubeconfigid:'kubernetes_config',
@@ -157,6 +191,7 @@ def call(body){
         catch(Exception err) {
             failedStage = "${pipelineStage}"
             echo "Build failed at ${pipelineStage} with ${err}"
+	    currentBuild.result = 'FAILURE'
         }
 
     }//end of timestamps
