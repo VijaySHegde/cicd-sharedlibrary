@@ -130,7 +130,8 @@ def call(body){
                 }//end of push docker image
 */
                 stage("Deploy") {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
+			 pipelineStage = "${STAGE_NAME}"
+               /* withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
 	                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
 	                    credentialsId: 'AWS_Credentials', 
 	                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
@@ -140,6 +141,12 @@ def call(body){
 					sh 'kubectl create -f kubernetes-configmap.yml'
 							}
 							}
+							*/
+			kubernetesDeploy(
+				configs:'kubernetes-configmap.yml',
+				kubeconfigid:'kubernetes_config',
+				enableConfigSubstitution:true
+				)
                 }//end of deploy stage
                  
             }//end of node
