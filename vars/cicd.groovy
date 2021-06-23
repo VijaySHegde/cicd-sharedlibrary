@@ -149,8 +149,10 @@ def call(body){
 		    stage("DB deployment-mysql conatiner") {
 			    pipelineStage = "${STAGE_NAME}"
 			    sh """
-			    docker-compose up
-			    mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+			    docker rm --force spring-petclinic_mysql_1
+			    docker rmi mysql:5.7
+			    timeout -k 2m docker-compose up
+			    timeout -k 2m mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 			    """
 		    }//end of db deploy
                
