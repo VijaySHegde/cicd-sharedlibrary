@@ -153,7 +153,6 @@ def call(body){
 			    def USER_INPUT = input(message: "Approval", submitter: "${deployApprover}", submitterParameter: 'approver_name',
                                 parameters: [
                                         [$class     : 'ChoiceParameterDefinition',
-                                         choices    : choice.join('\n'),
                                          name       : 'input',
                                          description: "Select Yes to Continue"]
                                 ])
