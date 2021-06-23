@@ -86,6 +86,18 @@ def call(body){
 
 
                     } //end of unit test
+			
+		  stage("build docker image and push") {
+                    pipelineStage = "${STAGE_NAME}"
+                 /*   sh """
+                    docker build -t vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER .
+                    """
+                   */ 
+                     docker.withRegistry('', 'dockerhub') {
+                         def customImage = docker.build("vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}")
+                         customImage.push()
+                     }
+                }//end  of build docker 
                 }
                 if("${executeSonar}".toUpperCase() == 'YES') {
                     stage("sonar") {
@@ -135,17 +147,7 @@ def call(body){
                         }
 		     }
                 
-                stage("build docker image and push") {
-                    pipelineStage = "${STAGE_NAME}"
-                 /*   sh """
-                    docker build -t vijayshegde/spring-petclinic-2.4.5.jar:$BUILD_NUMBER .
-                    """
-                   */ 
-                     docker.withRegistry('', 'dockerhub') {
-                         def customImage = docker.build("vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}")
-                         customImage.push()
-                     }
-                }//end  of build docker 
+               
                 
                 /* stage("push docker image") {
 //                     docker.withRegistry('', 'dockerhub') {
