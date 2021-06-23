@@ -151,8 +151,9 @@ def call(body){
 		    stage("Approval") {
 			    pipelineStage = "${STAGE_NAME}"
 			    echo "Taking approval for deployment"
-			    timeout(time: 7, unit:'DAYS')
+			    timeout(time: 7, unit:'DAYS') {
 			    input message: 'Do you want to deploy', submitter: 'vijay'
+			    }
 		    }//end of approval
 		    stage("DB deployment-mysql conatiner") {
 			    pipelineStage = "${STAGE_NAME}"
