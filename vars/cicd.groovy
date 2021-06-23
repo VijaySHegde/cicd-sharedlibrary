@@ -30,6 +30,7 @@ def call(body){
     def nexusAppName = config.nexusAppName
     def packagePath = config.packagePath
     def branch = ''
+    def deployApprover = 'vijay'
     def failedStage = 'None'
     branch = "${BRANCH_NAME}"
 
@@ -146,6 +147,20 @@ def call(body){
                             
                         }
 		     }
+		    
+		    stage("Approval") {
+			    pipelineStage = "${STAGE_NAME}"
+			    def USER_INPUT = input(message: "Approval", submitter: "${deployApprover}", submitterParameter: 'approver_name',
+                                parameters: [
+                                        [$class     : 'ChoiceParameterDefinition',
+                                         choices    : choice.join('\n'),
+                                         name       : 'input',
+                                         description: "Select Yes to Continue"]
+                                ])
+                        print(USER_INPUT['input'])
+                        echo "approver is "
+                        print(USER_INPUT['approver_name'])
+		    }//end of approval
 		    stage("DB deployment-mysql conatiner") {
 			    pipelineStage = "${STAGE_NAME}"
 			    sh """
