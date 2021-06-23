@@ -150,15 +150,9 @@ def call(body){
 		    
 		    stage("Approval") {
 			    pipelineStage = "${STAGE_NAME}"
-			    def USER_INPUT = input(message: "Approval", submitter: "${deployApprover}", submitterParameter: 'approver_name',
-                                parameters: [
-                                        [$class     : 'ChoiceParameterDefinition',
-                                         name       : 'input',
-                                         description: "Select Yes to Continue"]
-                                ])
-                        print(USER_INPUT['input'])
-                        echo "approver is "
-                        print(USER_INPUT['approver_name'])
+			    echo "Taking approval for deployment"
+			    timeout(time: 7, unit:'DAYS')
+			    input message: 'Do you want to deploy', submitter: 'vijay'
 		    }//end of approval
 		    stage("DB deployment-mysql conatiner") {
 			    pipelineStage = "${STAGE_NAME}"
