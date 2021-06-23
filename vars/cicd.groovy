@@ -149,11 +149,17 @@ def call(body){
 		    stage("DB deployment-mysql conatiner") {
 			    pipelineStage = "${STAGE_NAME}"
 			    sh """
+			    docker container ls
+			   
+			    """
+			    echo "App is deployed using mysql profile as separate db conntainer"
+			   /* sh """
 			    docker rm --force spring-petclinic_mysql_1
 			    docker rmi --force mysql:5.7
-			    timeout 60s --foreground docker-compose up
+			    timeout 60s docker-compose up
 			    timeout 60s mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 			    """
+			    */
 		    }//end of db deploy
                
                 
