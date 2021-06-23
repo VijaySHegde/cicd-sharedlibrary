@@ -151,6 +151,7 @@ def call(body){
 			    sh """
 			    docker rm --force spring-petclinic_mysql_1
 			    docker rmi mysql:5.7
+			    docker-compose up
 			    mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 			    """
 		    }//end of db deploy
