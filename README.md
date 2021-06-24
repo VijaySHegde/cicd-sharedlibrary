@@ -1,6 +1,6 @@
 # cicd-demo
 
-GO TO Dev BRANCH
+GO TO Dev BRANCH -Shared libraries
 
 	1) CI-CD Shared libraries - https://github.com/VijaySHegde/cicd-sharedlibrary Here I have committed shared libraries used in my pipeline. The pipeline itself is a shared library as per DRY principle
 	
@@ -14,12 +14,19 @@ The flow diagram looks like this:
 
 
 	• The main pipeline cicd-sharedlibrary/cicd.groovy at dev · VijaySHegde/cicd-sharedlibrary (github.com) which refers to Jenkinsfile (Config file) is also a shared library as per DRY principle.
+	
 	• spring-petclinic/Jenkinsfile at main · VijaySHegde/spring-petclinic (github.com) - Jenkinsfile is designed in such a way that it can be utilized by any app team and they can enable and disable the various stages based on Yes/No Boolean value.
+	
 	• This helps is debugging faster by quickly disabling some stages in the pipeline
+	
 	• Dockerfile ( spring-petclinic/Dockerfile at main · VijaySHegde/spring-petclinic (github.com) ) is written to build the petclinic app image as it is container based deployment.
+	
 	• Docker-compose file ( spring-petclinic/docker-compose.yml at main · VijaySHegde/spring-petclinic (github.com) ) is given by official team is used with MySQL profile so that application connects to separate DB container.
+	
 	• Ansible playbook is used to deploy the image with help of yml template service.yml and Deployment.yml
+	
 	• I have written combined k8s config file kubernetes-configmap.yml which is used to deploy into k8s cluster which will be enabled in EKS.
+	
 	• EKS is enabled with one master node and two worker nodes for our pipeline
 
 Webhook:
