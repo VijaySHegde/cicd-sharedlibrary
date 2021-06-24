@@ -46,6 +46,10 @@ X-GitHub-Hook-Installation-Target-Type: repository
 	
 ![image](https://user-images.githubusercontent.com/55663295/123207820-9ce34b00-d4db-11eb-9366-76bbfce772ce.png)
 
+http://65.2.147.47:8090/
+![image](https://user-images.githubusercontent.com/55663295/123213881-2d258e00-d4e4-11eb-8aac-18c8a7a739e5.png)
+
+
 
 https://github.com/VijaySHegde/terraform-demo/blob/main/README.md terraform 
 
