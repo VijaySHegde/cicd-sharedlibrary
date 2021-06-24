@@ -147,6 +147,12 @@ def call(body){
                             
                         }
 		     }
+		    stage("Docker image scan") {
+			    sh """
+			    docker scan vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}
+			    docker scan --file Dockerfile vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}
+			    """
+		    }//end of image scan
 		    
 		    
 		    stage("Approval") {
