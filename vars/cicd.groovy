@@ -173,7 +173,7 @@ def call(body){
 		    }//end of db deploy
 		    stage("Docker deploy") {
 			    sh """
-			    docker rm --force petclinic
+			    
 			    docker run -d -p 8090:8080 --name petclinic vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}
 			    """
 			    
