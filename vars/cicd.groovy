@@ -173,7 +173,8 @@ def call(body){
 		    }//end of db deploy
 		    stage("Docker deploy") {
 			    sh """
-			    
+			    docker stop petclinic
+			    docker rm --force petclinic
 			    docker run -d -p 8090:8080 --name petclinic vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}
 			    """
 			    
@@ -196,7 +197,7 @@ def call(body){
                     
                 }//end of push docker image
 */
-                stage("Deploy") {
+                stage("k8s Deploy") {
 			 pipelineStage = "${STAGE_NAME}"
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
 	                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
