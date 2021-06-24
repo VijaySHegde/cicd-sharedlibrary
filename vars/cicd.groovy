@@ -148,6 +148,7 @@ def call(body){
                         }
 		     }
 		    
+		    
 		    stage("Approval") {
 			    pipelineStage = "${STAGE_NAME}"
 			    echo "Taking approval for deployment"
@@ -170,7 +171,13 @@ def call(body){
 			    """
 			    */
 		    }//end of db deploy
-               
+		    stage("Docker deploy") {
+			    sh """
+			    docker rm --force petclinic
+			    docker run -d -p 8090:8080 --name petclinic vijayshegde/spring-petclinic-2.4.5.jar:${BUILD_NUMBER}
+			    """
+			    
+		    }//END OF DOCKER DEPLOY
                 
                 /* stage("push docker image") {
 //                     docker.withRegistry('', 'dockerhub') {
