@@ -12,5 +12,6 @@ Docker Hub is used to store the images built as part of the build stage.
 
 
 The flow diagram looks like this:
+
 ![image](https://user-images.githubusercontent.com/55663295/123195310-95b14280-d4c5-11eb-91ab-28b596271f3a.png)
 
